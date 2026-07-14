@@ -1,6 +1,10 @@
 import { getProducts } from "../DATA/products";
 import ProductCard from "../components/ProductCard";
 
+/**
+ * Renders the shop home page with promotional content and product listings.
+ * @returns {JSX.Element} The home page content.
+ */
 export default function Home() {
   const products = getProducts();
 
