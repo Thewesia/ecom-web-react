@@ -5,9 +5,11 @@ import Auth from "./pages/Auth";
 import checkout from "./pages/checkout";
 import Navbar from './components/Navbar';
 import './App.css'
+import { AuthProvider } from './context/Authcontext';
 
 function App() {
- return <div className="app">
+ return(
+  <AuthProvider> <div className="app">
   <Navbar/>
   <Routes>
     <Route path="/" element={<Home/>}/>
@@ -16,6 +18,8 @@ function App() {
    
   </Routes>
   </div>
+  </AuthProvider>
+  );
 }
 
 export default App
