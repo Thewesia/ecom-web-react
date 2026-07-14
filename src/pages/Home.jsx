@@ -1,4 +1,3 @@
-
 import { getProducts } from "../DATA/products";
 import ProductCard from "../components/ProductCard";
 
@@ -8,14 +7,15 @@ export default function Home() {
   return (
     <div className="page">
       <div className="home-hero">
-        <h1 className="home-title">Welcome to ShopHub</h1>
+        <h1 className="home-title">Welcome to My React Shop</h1>
         <p className="subtitle">
-          Discover amazing products at great prices
+          Browse the latest tech and accessories
         </p>
       </div>
 
       <div className="container">
         <h2 className="page-title">Our Products</h2>
+        <p className="subtitle">Hand‑picked items just for you</p>
         <div className="product-grid">
           {products.map((product) => (
             <ProductCard product={product} key={product.id}/>
