@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="page">
       <div className="home-hero">
-        <h1 className="home-title">Welcome to My React Shop</h1>
+        <h1 className="home-title">Welcome to.-.My React Shop</h1>
         <p className="subtitle">
           Browse the latest tech and accessories
         </p>
