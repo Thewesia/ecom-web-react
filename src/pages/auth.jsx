@@ -42,7 +42,13 @@ export default function Auth() {
             <div className="user-info">
               <h2>User logged in</h2>
               <p>Email: {user.email}</p>
-              <button className="btn btn-secondary" onClick={logout}>
+              <button
+                className="btn btn-secondary"
+                onClick={() => {
+                  logout();
+                  navigate("/auth"); // ✅ redirect to auth page after logout
+                }}
+              >
                 Logout
               </button>
             </div>

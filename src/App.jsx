@@ -1,25 +1,27 @@
-
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
-import checkout from "./pages/checkout";
+import Checkout from "./pages/Checkout"; // ✅ correct import
 import Navbar from './components/Navbar';
-import './App.css'
-import { AuthProvider } from './context/Authcontext';
+import './App.css';
+import { AuthProvider } from './context/AuthContext';
+import ProductDetails from "./pages/ProductDetails"; // ✅ product details page
 
 function App() {
- return(
-  <AuthProvider> <div className="app">
-  <Navbar/>
-  <Routes>
-    <Route path="/" element={<Home/>}/>
-    <Route path="/auth" element={<Auth/>}/>
-    <Route path="/checkout" element={<checkout/>} />
-   
-  </Routes>
-  </div>
-  </AuthProvider>
+  return (
+    <AuthProvider>
+      <div className="app">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/checkout" element={<Checkout />} /> 
+          {/* ✅ Dynamic product route */}
+          <Route path="/products/:id" element={<ProductDetails />} />
+        </Routes>
+      </div>
+    </AuthProvider>
   );
 }
 
-export default App
+export default App;
