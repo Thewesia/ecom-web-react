@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthContext"; // ✅ use custom hook
+import { useAuth } from "../context/AuthContext";  // ✅ fixed path
 
 export default function Navbar() {
   const { user, logout } = useAuth();
-  const navigate = useNavigate(); // ✅ initialize navigate
+
 
   return (
     <nav className="navbar">

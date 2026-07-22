@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
-import Checkout from "./pages/Checkout"; 
+import Chekout from "./pages/chekout";   // ✅ matches file name
 import Navbar from './components/Navbar';
 import './App.css';
 import { AuthProvider } from './context/AuthContext';
-import { CartProvider } from './context/CartContext'; // ✅ import CartProvider
-import ProductDetails from "./pages/ProductDetails"; 
+import { CartProvider } from './context/CartContext';
+import ProductDetail from "./pages/ProductDetail";   // ✅ matches file name
 
 function App() {
   return (
@@ -17,9 +17,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/checkout" element={<Checkout />} /> 
-            {/* ✅ Dynamic product route */}
-            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/checkout" element={<Chekout />} /> 
+            <Route path="/products/:id" element={<ProductDetail />} />
           </Routes>
         </div>
       </CartProvider>

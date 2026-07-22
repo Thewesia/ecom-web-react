@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "./AuthContext"; 
-import { useNavigate } from "react-router-dom"; // ✅ import useNavigate
+import { useAuth } from "../context/AuthContext";  // ✅ fixed path
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const [mode, setMode] = useState("signup");
   const { user, isLoggedIn, signup, login, logout, authError } = useAuth();
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // ✅ initialize navigate
+  const navigate = useNavigate();
 
   const {
     register,
@@ -28,7 +28,6 @@ export default function Auth() {
 
     setLoading(false);
 
-    // ✅ If login/signup successful, redirect to home
     if (result?.success) {
       navigate("/"); 
     }
@@ -46,7 +45,7 @@ export default function Auth() {
                 className="btn btn-secondary"
                 onClick={() => {
                   logout();
-                  navigate("/auth"); // ✅ redirect to auth page after logout
+                  navigate("/auth");
                 }}
               >
                 Logout
@@ -117,7 +116,6 @@ export default function Auth() {
                   </div>
                 )}
 
-                {/* Auth error from context */}
                 {authError && <p className="error">{authError}</p>}
 
                 <button
@@ -133,7 +131,6 @@ export default function Auth() {
                 </button>
               </form>
 
-              {/* Switch between signup/login */}
               <div className="auth-switch">
                 {mode === "signup" ? (
                   <p>
