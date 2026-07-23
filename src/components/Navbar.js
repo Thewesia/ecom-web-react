@@ -1,52 +1,74 @@
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";  // ✅ fixed path
+import { useAuth } from "../context/authcontext";
+import "./Navbar.css"; // CSS for Navbar
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
+  return React.createElement(
+    "nav",
+    { className: "navbar" },
+    React.createElement(
+      "div",
+      { className: "navbar-container" },
 
-  return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="navbar-brand">
-          ShopHub
-        </Link>
+      // Brand
+      React.createElement(
+        Link,
+        { to: "/", className: "navbar-brand" },
+        "ShopHub"
+      ),
 
-        <div className="navbar-links">
-          <Link to="/" className="navbar-link">
-            Home
-          </Link>
-          <Link to="/checkout" className="navbar-link">
-            Cart
-          </Link>
-        </div>
+      // Links
+      React.createElement(
+        "div",
+        { className: "navbar-links" },
+        React.createElement(Link, { to: "/", className: "navbar-link" }, "Home"),
+        React.createElement(
+          Link,
+          { to: "/checkout", className: "navbar-link" },
+          "Cart"
+        )
+      ),
 
-        <div className="navbar-auth">
-          {user ? (
-            <div className="navbar-user">
-              <span>Hello, {user.email}</span>
-              <button
-                className="btn btn-secondary"
-                onClick={() => {
-                  logout();
-                  navigate("/auth");
-                }}
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <div className="navbar-auth-links">
-              <Link to="/auth" className="btn btn-secondary">
-                Login
-              </Link>
-              <Link to="/auth" className="btn btn-primary">
-                Signup
-              </Link>
-            </div>
-          )}
-        </div>
-      </div>
-    </nav>
+      // Auth Section
+      React.createElement(
+        "div",
+        { className: "navbar-auth" },
+        user
+          ? React.createElement(
+              "div",
+              { className: "navbar-user" },
+              React.createElement("span", null, `Hello, ${user.email}`),
+              React.createElement(
+                "button",
+                {
+                  className: "btn btn-secondary",
+                  onClick: () => {
+                    logout();
+                    navigate("/auth");
+                  },
+                },
+                "Logout"
+              )
+            )
+          : React.createElement(
+              "div",
+              { className: "navbar-auth-links" },
+              React.createElement(
+                Link,
+                { to: "/auth", className: "btn btn-secondary" },
+                "Login"
+              ),
+              React.createElement(
+                Link,
+                { to: "/auth", className: "btn btn-primary" },
+                "Signup"
+              )
+            )
+      )
+    )
   );
 }

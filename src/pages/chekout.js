@@ -1,86 +1,114 @@
-// Checkout.jsx
+import React from "react";
 import { useCart } from "../context/CartContext";
+import "../view/checkout.css";
 
 export default function Checkout() {
-  const { 
-    getCartItemsWithProducts, 
-    removeFromCart, 
-    clearCart, 
-    updateQuantity, 
+  const {
+    cart,
+    removeFromCart,
+    clearCart,
+    updateQuantity,
+    getCartItemsWithProducts,
     getTotalAmount,
-    placeOrder // ✅ include placeOrder
+    placeOrder,
   } = useCart();
 
   const cartItems = getCartItemsWithProducts();
-  const totalPrice = getTotalAmount();
 
-  if (cartItems.length === 0) {
-    return (
-      <div className="pages">
-        <div className="container">
-          <h1>Your cart is empty</h1>
-        </div>
-      </div>
-    );
-  }
+  return React.createElement(
+    "div",
+    { className: "page checkout-page" },
+    React.createElement(
+      "div",
+      { className: "container" },
+      React.createElement("h1", { className: "page-title" }, "Checkout"),
 
-  return (
-    <div className="pages">
-      <div className="container">
-        <h1>Checkout</h1>
-        <div className="checkout-items">
-          {cartItems.map(({ id, quantity, product }) => {
-            if (!product) return null;
+      cartItems.length === 0
+        ? React.createElement(
+            "p",
+            { className: "empty-cart" },
+            "Your cart is empty."
+          )
+        : React.createElement(
+            React.Fragment,
+            null,
 
-            return (
-              <div key={id} className="checkout-item">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="checkout-item-image"
-                />
-                <div className="checkout-item-content">
-                  <h3>{product.name}</h3>
-                  <p>Price: ${product.price}</p>
-                  <p>
-                    Quantity: {quantity}
-                    <button
-                      className="btn btn-small"
-                      onClick={() => updateQuantity(id, quantity + 1)}
-                    >
-                      +
-                    </button>
-                    <button
-                      className="btn btn-small"
-                      onClick={() => updateQuantity(id, quantity - 1)}
-                      disabled={quantity <= 1}
-                    >
-                      -
-                    </button>
-                  </p>
-                  <p>Subtotal: ${product.price * quantity}</p>
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() => removeFromCart(id)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+            // Cart Items
+            React.createElement(
+              "div",
+              { className: "cart-items" },
+              cartItems.map((item) =>
+                React.createElement(
+                  "div",
+                  { key: item.id, className: "cart-item" },
+                  React.createElement("img", {
+                    src: item.product.image,
+                    alt: item.product.name,
+                    className: "cart-item-image",
+                  }),
+                  React.createElement(
+                    "div",
+                    { className: "cart-item-details" },
+                    React.createElement(
+                      "h3",
+                      { className: "cart-item-name" },
+                      item.product.name
+                    ),
+                    React.createElement(
+                      "p",
+                      { className: "cart-item-price" },
+                      `$${item.product.price}`
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "cart-item-quantity" },
+                      React.createElement("label", null, "Quantity: "),
+                      React.createElement("input", {
+                        type: "number",
+                        min: 1,
+                        value: item.quantity,
+                        onChange: (e) =>
+                          updateQuantity(item.id, Number(e.target.value)),
+                      })
+                    ),
+                    React.createElement(
+                      "button",
+                      {
+                        className: "btn btn-secondary",
+                        onClick: () => removeFromCart(item.id),
+                      },
+                      "Remove"
+                    )
+                  )
+                )
+              )
+            ),
 
-        <div className="checkout-summary">
-          <h2>Total: ${totalPrice}</h2>
-          <button className="btn btn-danger" onClick={clearCart}>
-            Clear Cart
-          </button>
-          <button className="btn btn-primary" onClick={placeOrder}>
-            Place Order
-          </button>
-        </div>
-      </div>
-    </div>
+            // Cart Summary
+            React.createElement(
+              "div",
+              { className: "cart-summary" },
+              React.createElement(
+                "h2",
+                null,
+                `Total: $${getTotalAmount().toFixed(2)}`
+              ),
+              React.createElement(
+                "div",
+                { className: "cart-actions" },
+                React.createElement(
+                  "button",
+                  { className: "btn btn-danger", onClick: clearCart },
+                  "Clear Cart"
+                ),
+                React.createElement(
+                  "button",
+                  { className: "btn btn-primary", onClick: placeOrder },
+                  "Place Order"
+                )
+              )
+            )
+          )
+    )
   );
 }

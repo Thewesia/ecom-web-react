@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../context/AuthContext";  // ✅ fixed path
+import { useAuth } from "../context/authcontext";
 import { useNavigate } from "react-router-dom";
+import "../view/auth.css";
 
 export default function Auth() {
   const [mode, setMode] = useState("signup");
@@ -29,61 +30,92 @@ export default function Auth() {
     setLoading(false);
 
     if (result?.success) {
-      navigate("/"); 
+      navigate("/");
     }
   };
 
-  return (
-    <div className="page">
-      <div className="container">
-        <div className="auth-container">
-          {isLoggedIn && user ? (
-            <div className="user-info">
-              <h2>User logged in</h2>
-              <p>Email: {user.email}</p>
-              <button
-                className="btn btn-secondary"
-                onClick={() => {
-                  logout();
-                  navigate("/auth");
-                }}
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <>
-              <h1 className="page-title">
-                {mode === "signup" ? "Sign Up" : "Login"}
-              </h1>
+  return React.createElement(
+    "div",
+    { className: "page" },
+    React.createElement(
+      "div",
+      { className: "container" },
+      React.createElement(
+        "div",
+        { className: "auth-container" },
+        isLoggedIn && user
+          ? React.createElement(
+              "div",
+              { className: "user-info" },
+              React.createElement("h2", null, "User logged in"),
+              React.createElement("p", null, `Email: ${user.email}`),
+              React.createElement(
+                "button",
+                {
+                  className: "btn btn-secondary",
+                  onClick: () => {
+                    logout();
+                    navigate("/auth");
+                  },
+                },
+                "Logout"
+              )
+            )
+          : React.createElement(
+              React.Fragment,
+              null,
+              React.createElement(
+                "h1",
+                { className: "page-title" },
+                mode === "signup" ? "Sign Up" : "Login"
+              ),
+              React.createElement(
+                "form",
+                { className: "auth-form", onSubmit: handleSubmit(onSubmit) },
 
-              <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
-                {/* Email */}
-                <div className="form-group">
-                  <label className="form-label" htmlFor="email">Email</label>
-                  <input
-                    className="form-input"
-                    type="email"
-                    id="email"
-                    {...register("email", {
+                // Email
+                React.createElement(
+                  "div",
+                  { className: "form-group" },
+                  React.createElement(
+                    "label",
+                    { className: "form-label", htmlFor: "email" },
+                    "Email"
+                  ),
+                  React.createElement("input", {
+                    className: "form-input",
+                    type: "email",
+                    id: "email",
+                    ...register("email", {
                       required: "Email is required",
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                         message: "Invalid email format",
                       },
-                    })}
-                  />
-                  {errors.email && <p className="error">{errors.email.message}</p>}
-                </div>
+                    }),
+                  }),
+                  errors.email &&
+                    React.createElement(
+                      "p",
+                      { className: "error" },
+                      errors.email.message
+                    )
+                ),
 
-                {/* Password */}
-                <div className="form-group">
-                  <label className="form-label" htmlFor="password">Password</label>
-                  <input
-                    className="form-input"
-                    type="password"
-                    id="password"
-                    {...register("password", {
+                // Password
+                React.createElement(
+                  "div",
+                  { className: "form-group" },
+                  React.createElement(
+                    "label",
+                    { className: "form-label", htmlFor: "password" },
+                    "Password"
+                  ),
+                  React.createElement("input", {
+                    className: "form-input",
+                    type: "password",
+                    id: "password",
+                    ...register("password", {
                       required: "Password is required",
                       minLength: {
                         value: 6,
@@ -93,71 +125,97 @@ export default function Auth() {
                         value: 12,
                         message: "Password cannot exceed 12 characters",
                       },
-                    })}
-                  />
-                  {errors.password && <p className="error">{errors.password.message}</p>}
-                </div>
+                    }),
+                  }),
+                  errors.password &&
+                    React.createElement(
+                      "p",
+                      { className: "error" },
+                      errors.password.message
+                    )
+                ),
 
-                {/* Confirm Password (only in signup mode) */}
-                {mode === "signup" && (
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
-                    <input
-                      className="form-input"
-                      type="password"
-                      id="confirmPassword"
-                      {...register("confirmPassword", {
+                // Confirm Password (signup mode only)
+                mode === "signup" &&
+                  React.createElement(
+                    "div",
+                    { className: "form-group" },
+                    React.createElement(
+                      "label",
+                      { className: "form-label", htmlFor: "confirmPassword" },
+                      "Confirm Password"
+                    ),
+                    React.createElement("input", {
+                      className: "form-input",
+                      type: "password",
+                      id: "confirmPassword",
+                      ...register("confirmPassword", {
                         required: "Please confirm your password",
                         validate: (value) =>
-                          value === watch("password") || "Passwords do not match",
-                      })}
-                    />
-                    {errors.confirmPassword && <p className="error">{errors.confirmPassword.message}</p>}
-                  </div>
-                )}
+                          value === watch("password") ||
+                          "Passwords do not match",
+                      }),
+                    }),
+                    errors.confirmPassword &&
+                      React.createElement(
+                        "p",
+                        { className: "error" },
+                        errors.confirmPassword.message
+                      )
+                  ),
 
-                {authError && <p className="error">{authError}</p>}
+                authError &&
+                  React.createElement("p", { className: "error" }, authError),
 
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-large"
-                  disabled={loading}
-                >
-                  {loading
+                React.createElement(
+                  "button",
+                  {
+                    type: "submit",
+                    className: "btn btn-primary btn-large",
+                    disabled: loading,
+                  },
+                  loading
                     ? "Processing..."
                     : mode === "signup"
                     ? "Sign Up"
-                    : "Login"}
-                </button>
-              </form>
+                    : "Login"
+                )
+              ),
 
-              <div className="auth-switch">
-                {mode === "signup" ? (
-                  <p>
-                    Already have an account?{" "}
-                    <span
-                      className="auth-link"
-                      onClick={() => setMode("login")}
-                    >
-                      Login
-                    </span>
-                  </p>
-                ) : (
-                  <p>
-                    Don’t have an account?{" "}
-                    <span
-                      className="auth-link"
-                      onClick={() => setMode("signup")}
-                    >
-                      Sign Up
-                    </span>
-                  </p>
-                )}
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
+              // Switch between signup/login
+              React.createElement(
+                "div",
+                { className: "auth-switch" },
+                mode === "signup"
+                  ? React.createElement(
+                      "p",
+                      null,
+                      "Already have an account? ",
+                      React.createElement(
+                        "span",
+                        {
+                          className: "auth-link",
+                          onClick: () => setMode("login"),
+                        },
+                        "Login"
+                      )
+                    )
+                  : React.createElement(
+                      "p",
+                      null,
+                      "Don’t have an account? ",
+                      React.createElement(
+                        "span",
+                        {
+                          className: "auth-link",
+                          onClick: () => setMode("signup"),
+                        },
+                        "Sign Up"
+                      )
+                    )
+              )
+            )
+      )
+    )
   );
 }

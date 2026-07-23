@@ -1,4 +1,3 @@
-// AuthContext.jsx
 import React, { createContext, useState, useEffect, useContext } from "react";
 
 const AuthContext = createContext();
@@ -8,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authError, setAuthError] = useState(null);
 
-  // ✅ Load user + login state from localStorage when app starts
+  // Load user + login state from localStorage when app starts
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const storedLoginState = localStorage.getItem("isLoggedIn");
@@ -19,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // ✅ Signup (prevent duplicate email)
+  // Signup (prevent duplicate email)
   const signup = (email, password) => {
     setAuthError(null);
 
@@ -40,14 +39,17 @@ export const AuthProvider = ({ children }) => {
     return { success: true, message: "Signup successful" };
   };
 
-  // ✅ Login (check credentials against localStorage)
+  // Login (check credentials against localStorage)
   const login = (email, password) => {
     setAuthError(null);
 
     const storedUser = localStorage.getItem("user");
     if (!storedUser) {
       setAuthError("No account found. Please sign up first.");
-      return { success: false, message: "No account found. Please sign up first." };
+      return {
+        success: false,
+        message: "No account found. Please sign up first.",
+      };
     }
 
     const parsedUser = JSON.parse(storedUser);
@@ -62,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Logout
+  // Logout
   const logout = () => {
     setUser(null);
     setIsLoggedIn(false);
@@ -72,12 +74,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("isLoggedIn", "false");
   };
 
-  return (
-    <AuthContext.Provider
-      value={{ user, isLoggedIn, authError, signup, login, logout }}
-    >
-      {children}
-    </AuthContext.Provider>
+  return React.createElement(
+    AuthContext.Provider,
+    { value: { user, isLoggedIn, authError, signup, login, logout } },
+    children
   );
 };
 

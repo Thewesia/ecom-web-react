@@ -1,4 +1,3 @@
-// CartContext.jsx
 import React, { createContext, useState, useContext } from "react";
 import { getProductById } from "../DATA/products";
 
@@ -50,7 +49,6 @@ export const CartProvider = ({ children }) => {
     }, 0);
   };
 
-  
   const placeOrder = () => {
     if (cart.length === 0) {
       alert("Your cart is empty. Add items before placing an order.");
@@ -60,9 +58,10 @@ export const CartProvider = ({ children }) => {
     clearCart(); // empty cart after placing order
   };
 
-  return (
-    <CartContext.Provider
-      value={{
+  return React.createElement(
+    CartContext.Provider,
+    {
+      value: {
         cart,
         addToCart,
         removeFromCart,
@@ -70,11 +69,10 @@ export const CartProvider = ({ children }) => {
         updateQuantity,
         getCartItemsWithProducts,
         getTotalAmount,
-        placeOrder, // ✅ expose placeOrder
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+        placeOrder,
+      },
+    },
+    children
   );
 };
 
