@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext"; // ✅ import useCart
+import { useCart } from "../context/CartContext"; //  import useCart
 
 export default function ProductCard({ product }) {
-  const { cart, addToCart } = useCart(); // ✅ get cart + addToCart
+  const { cart, addToCart } = useCart(); //  get cart + addToCart
 
-  // ✅ find product in cart
+  // find product in cart
   const productInCart = cart.find((item) => item.id === product.id);
   const productQuantityLabel = productInCart
     ? `(${productInCart.quantity})`

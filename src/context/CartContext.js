@@ -50,7 +50,7 @@ export const CartProvider = ({ children }) => {
     }, 0);
   };
 
-  // ✅ Place order function
+  
   const placeOrder = () => {
     if (cart.length === 0) {
       alert("Your cart is empty. Add items before placing an order.");

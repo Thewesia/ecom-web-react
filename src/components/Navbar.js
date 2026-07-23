@@ -29,7 +29,7 @@ export default function Navbar() {
                 className="btn btn-secondary"
                 onClick={() => {
                   logout();
-                  navigate("/auth"); // ✅ redirect after logout
+                  navigate("/auth");
                 }}
               >
                 Logout
